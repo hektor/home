@@ -1,0 +1,16 @@
+wake_laptop:
+  alias: WoL (TP-Link USB)
+  sequence:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret tplink_usb_mac
+      broadcast_address: !secret laptop_broadcast_address
+  mode: single
+wake_laptop_tp_link_usb_c:
+  alias: WoL (TP-Link USB C)
+  sequence:
+  - service: wake_on_lan.send_magic_packet
+    data:
+      mac: !secret tplink_usb_c_mac
+      broadcast_address: !secret laptop_broadcast_address
+  mode: single
