@@ -1,0 +1,30 @@
+default_config:
+group:      !include groups.yaml
+automation: !include automations.yaml
+script:     !include scripts.yaml
+scene:      !include scenes.yaml
+
+wake_on_lan:
+switch:
+  - platform: wake_on_lan
+    mac: !secret tplink_usb_c_mac
+    broadcast_address: !secret laptop_broadcast_address
+
+input_datetime:
+  next_alarm:
+    name: Next scheduled alarm
+    has_date: true
+    has_time: true
+
+sensor:
+  - platform: time_date
+    display_options:
+    - 'date_time'
+
+automation:
+  trigger:
+    platform: template
+    value_template: "{{ states('sensor.date_time') == (state_attr('input_datetime.next_alarm', 'timestamp') | int | timestamp_custom('%Y-%m-%d, %H:%M', True)) }}"
+  action:
+    service: light.turn_on
+    entity_id: light.bedroom
