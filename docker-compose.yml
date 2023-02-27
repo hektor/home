@@ -1,5 +1,17 @@
 version: '3'
 services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto
+    volumes:
+      - ./.mosquitto:/mosquitto
+      - ./.mosquitto/data:/mosquitto/data
+      - ./.mosquitto/log:/mosquitto/log
+      - ./.mosquitto/config:/mosquitto/config
+    ports:
+      - 1883:1883
+      - 9001:9001
+    restart: always
   zigbee2mqtt:
     container_name: zigbee2mqtt
     image: koenkk/zigbee2mqtt
@@ -15,7 +27,7 @@ services:
       - TZ=Europe/Brussels
   homeassistant:
     container_name: homeassistant
-    image: homeassistant/raspberrypi3-homeassistant:stable
+    image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
       - ./.home-assistant:/config
       - /etc/localtime:/etc/localtime:ro
