@@ -1,1 +1,4 @@
 secrets.yaml
+.mosquitto/data
+.zigbee2mqtt/*.json
+.zigbee2mqtt/*.db
